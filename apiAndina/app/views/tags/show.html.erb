@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Rfid:</strong>
+  <%= @tag.rfid %>
+</p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @tag.product %>
+</p>
+
+<%= link_to 'Edit', edit_tag_path(@tag) %> |
+<%= link_to 'Back', tags_path %>

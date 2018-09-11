@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sku: MyString
+  desc: MyString
+  stock: MyString
+  cjxpallet: MyString
+
+two:
+  sku: MyString
+  desc: MyString
+  stock: MyString
+  cjxpallet: MyString
