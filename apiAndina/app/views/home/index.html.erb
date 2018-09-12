@@ -1,8 +1,100 @@
 <h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<p>Versión con API para la prueba de Andina</p>
 
 <br>
 <br>
 <%= link_to 'Productos', products_path %>
 <br>
 <%= link_to 'Tags', tags_path %>
+
+<h2>API RFID</h2>
+
+<hr>
+
+<div>
+	Metodo: getRfidInfo 
+Parametros: Id
+Servicio REST→ GET
+
+</div>
+<br>
+<div>
+	Retorna un json del siguiente tipo:
+{"success":true,"data":[{"id":"valor_del_id_rfid","sku":"sku_del_cliente","desc":"descripcion_del_sku","cjxpallet":0}],"error":null}
+
+Cuando success es false, “data” queda como null y en “error” se detalla el error en la api.
+
+Para efecto de la demo, el api se encarga de crear el id y le asocia un código en caso que no exista en la base de datos.
+
+</div>
+<br>
+
+<%= link_to 'getRfidInfo', api_v1_out_getRfidInfo_path(:rfid=> 6549865149814687651698746987454874)  %>
+<hr>
+
+<div>
+	Método: getStock
+Servicio REST → GET
+
+</div>
+<br>
+<div>
+	Retorna un json del siguiente tipo:
+{"success":true,"data":[{"sku":"sku_del_cliente","desc":"descripcion_del_sku","cantidad":0},....,{"sku":"sku_del_cliente","desc":"descripcion_del_sku","cantidad":0}],"error":null}
+
+Cuando success es false, data queda como null y en error se detalla el error en la api.
+Este servicio entrega el stock total en ese minuto.
+
+</div>
+
+<%= link_to 'getStock', api_v1_out_getStock_path  %>
+<br>
+<br>
+<br>
+<hr>
+<hr>
+
+<h2>API GIS</h2>
+
+<hr>
+
+<div>
+	Metodo: getPointZona 
+Parámetros: lat, lng
+Servicio REST→ GET
+
+
+</div>
+<br>
+<div>
+	Retorna un json del siguiente tipo:
+{"success":true,"data":[{"id_zona":"valor_id_zona","nombre_zona":"nombre_de_la_zona"}],"error":null}
+
+Cuando success es false, “data” queda como null y en “error” se detalla el error en la api.
+
+</div>
+<%= link_to 'getPointZona', api_v1_out_getPointZona_path(:lng=> -70.7688,:lat=> -33.3943)  %>
+
+<br>
+
+<hr>
+
+<div>
+	Método: getZona
+Parámetros: id_zona
+Servicio REST → GET
+
+</div>
+<br>
+<div>
+	Retorna un json del siguiente tipo:
+{"success":true, "data":[{"id_zona":"valor_id_zona","nombre_zona":"nombre_de_la_zona", "polygon": [{"lat":numero.latitud","lng":numero.longitud}, … ,{"lat":numero.latitud","lng":numero.longitud}] } ],"error":null}
+
+Cuando success es false, data queda como null y en error se detalla el error en la api.
+Este servicio entrega todos los puntos del polígono de la zona
+
+</div>
+<%= link_to 'getZona', api_v1_out_getZona_path(:name=> 'andina')  %>
+
+<br>
+
