@@ -84,7 +84,7 @@ class Api::V1::OutController < ApplicationController
     end
 
     feature_collection = Zona.to_feature_collection zona
-   	response= RGeo::GeoJSON.encode(feature_collection)
+   	response= leoJson(RGeo::GeoJSON.encode(feature_collection))
 
 
 	rescue StandardError => error
@@ -120,7 +120,7 @@ class Api::V1::OutController < ApplicationController
 
 	    feature_collection = Zona.to_feature_collection zona
 
-	   	response= RGeo::GeoJSON.encode(feature_collection)
+	   	response= leoJson(RGeo::GeoJSON.encode(feature_collection))
 
 	rescue StandardError => error
 	  # code that deals with some exception
@@ -140,6 +140,7 @@ class Api::V1::OutController < ApplicationController
 
   end
 
+
   def getZonas
 
   	begin
@@ -147,7 +148,7 @@ class Api::V1::OutController < ApplicationController
 	  	zonas=Zona.all
 	    feature_collection = Zona.to_feature_collection zonas
 
-		response=RGeo::GeoJSON.encode(feature_collection)
+		response=leoJson(RGeo::GeoJSON.encode(feature_collection))
 
 	rescue StandardError => error
 	  # code that deals with some exception
@@ -186,6 +187,38 @@ class Api::V1::OutController < ApplicationController
   data[:data] = _data
   data[:error] = _error      
   return data
+end
+
+def leoJson(geoJson)
+  data_hash=Hash.new
+  features_hash = JSON.parse('{"features" : []}');
+ 
+  data_hash[:type] = geoJson["type"] 
+  features = geoJson["features"] 
+
+	features.each do |feature|
+		feature_hash=Hash.new
+		feature_hash[:type]=feature["type"]
+		geometry_hash = JSON.parse('{"coordinates" : []}');
+		geometry_hash[:type]=feature["geometry"]["type"]
+		geometry_hash[:color]=feature["properties"]["color"]
+		coordinates=feature["geometry"]["coordinates"]
+		coordinates[0][0].each do |coordinate|
+			coordinate_hash=Hash.new
+			coordinate_hash[:lat]=coordinate[1]
+			coordinate_hash[:lng]=coordinate[0]
+			geometry_hash["coordinates"] << coordinate_hash
+		end
+
+		geometry_hash[:coordinates]
+		feature_hash[:geometry]=geometry_hash
+		feature_hash[:properties]=feature["properties"]
+		feature_hash[:id]=feature["id"]
+		features_hash["features"] << feature_hash
+	end
+	
+	data_hash[:features]=features_hash
+  return data_hash
 end
 
 
