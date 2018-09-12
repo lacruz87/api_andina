@@ -1,6 +1,6 @@
 class Zona < ApplicationRecord
 	include Featurable
-	featurable :geom, [:name]
+	featurable :geom, [:name,:color]
 
     def as_geojson
       sql = "SELECT ST_asgeojson(ST_Transform(ST_SetSRID(geom,4326),4326)) FROM Zonas where id = #{self.id};"

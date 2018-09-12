@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180912034142) do
+ActiveRecord::Schema.define(version: 20180912170450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20180912034142) do
     t.geometry "geom", limit: {:srid=>4326, :type=>"multi_polygon"}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "color"
     t.index ["geom"], name: "index_zonas_on_geom", using: :gist
   end
 
