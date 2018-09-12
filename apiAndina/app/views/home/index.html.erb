@@ -98,3 +98,24 @@ Este servicio entrega todos los puntos del polígono de la zona
 
 <br>
 
+<hr>
+
+<div>
+	Método: getZonas
+	Servicio REST → GET
+
+</div>
+<br>
+<div>
+	Retorna un json del siguiente tipo:
+
+{"success":true,"data":{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"MultiPolygon","coordinates":[[[[-70.7688,-33.3943],[-70.7653,-33.3905],[-70.7579,-33.3948],[-70.7595,-33.3984],[-70.7688,-33.3943]]]]},"properties":{"name":"andina"},"id":1},{"type":"Feature","geometry":{"type":"MultiPolygon","coordinates":[[[[-70.5766,-33.4502],[-70.5749,-33.4582],[-70.5638,-33.458],[-70.5647,-33.4483],[-70.5766,-33.4502]]]]},"properties":{"name":"plaza_egaña"},"id":2}]},"error":null}
+
+Cuando success es false, data queda como null y en error se detalla el error en la api.
+Este servicio entrega todas las zonas con sus poligonos
+
+</div>
+<%= link_to 'getZonas', api_v1_out_getZonas_path %>
+
+<br>
+

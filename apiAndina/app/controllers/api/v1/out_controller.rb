@@ -140,6 +140,33 @@ class Api::V1::OutController < ApplicationController
 
   end
 
+  def getZonas
+
+  	begin
+
+	  	zonas=Zona.all
+	    feature_collection = Zona.to_feature_collection zonas
+
+		response=RGeo::GeoJSON.encode(feature_collection)
+
+	rescue StandardError => error
+	  # code that deals with some exception
+	  response_error=error
+	  success=false
+	else
+	  # code that runs only if *no* exception was raised
+	  success=true
+
+	ensure
+	  # ensure that this code always runs, no matter what
+	  # does not change the final value of the block
+	end
+
+	output=standardResponseHash(success,response,response_error).to_json
+	render :json=>output
+
+  end
+
       # Never trust parameters from the scary internet, only allow the white list through.
     def tag_params
       params.permit(:rfid)
