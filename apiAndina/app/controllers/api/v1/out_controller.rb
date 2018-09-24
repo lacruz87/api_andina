@@ -16,13 +16,13 @@ class Api::V1::OutController < ApplicationController
 	        #tag = Tag.new(tag_params)
 	  		#product=Product.all.sample
 	     	#tag.product=product
+         	#tag.save
 	     else
 	  		product=tag.product
 		  	r_sku=product.sku
 		  	r_desc=product.desc
 		  	r_cjxpal=product.cjxpallet 
 	     end
-         tag.save
 
 		  response=Hash.new
 		  response[:rfid] = r_rfid
