@@ -4,22 +4,31 @@ class Api::V1::OutController < ApplicationController
   def getRfidInfo
   	begin
 
+	  	r_rfid=tag_params['rfid']
+	  	r_sku="000000"
+	  	r_desc="SIN INFO"
+	  	r_cjxpal=0
+
 	  	tag=Tag.find_by_rfid(tag_params['rfid'])
 
+
 		unless tag
-	        tag = Tag.new(tag_params)
-	  		product=Product.all.sample
-	     	tag.product=product
+	        #tag = Tag.new(tag_params)
+	  		#product=Product.all.sample
+	     	#tag.product=product
 	     else
 	  		product=tag.product
+		  	r_sku=product.sku
+		  	r_desc=product.desc
+		  	r_cjxpal=product.cjxpallet 
 	     end
          tag.save
 
 		  response=Hash.new
-		  response[:rfid] = tag.rfid
-		  response[:sku] = product.sku
-		  response[:desc] = product.desc
-		  response[:cjxpallet] = product.cjxpallet    
+		  response[:rfid] = r_rfid
+		  response[:sku] = r_sku
+		  response[:desc] = r_desc
+		  response[:cjxpallet] = r_cjxpal    
 
 	rescue StandardError => error
 	  # code that deals with some exception
